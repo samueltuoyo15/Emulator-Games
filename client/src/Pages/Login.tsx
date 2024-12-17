@@ -7,7 +7,7 @@ const Login = () => {
   const sendEmailToServer = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
-      const res = await fetch('/SignIn', {
+      const res = await fetch(import.meta.env.VITE_SIGNIN, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

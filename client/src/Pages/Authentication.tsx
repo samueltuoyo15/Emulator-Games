@@ -39,7 +39,7 @@ const Authentication = () => {
       return
     }
     try {
-      const res = await fetch('http:///SignUp', {
+      const res = await fetch(import.meta.env.VITE_SIGNUP, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
