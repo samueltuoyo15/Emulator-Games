@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 import cors from 'cors'
 import { fileURLToPath } from 'url'
 import { createClient } from '@supabase/supabase-js'
-import {SignUpUser, SignInWithMagicLink} from './Auth/Auth.js'
+import {SignUpUser, SignInWithMagicLink} from './controllers/Auth.js'
 dotenv.config()
 const app = express()
 const port = process.env.PORT
