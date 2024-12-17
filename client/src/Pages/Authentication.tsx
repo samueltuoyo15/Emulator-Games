@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import SweetAlert2 from 'react-sweetalert2'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 interface SignUpProps {
   setIsAuthenticated: (isAuthenticated: boolean) => void
@@ -16,7 +16,7 @@ const Authentication = ({setIsAuthenticated}: SignUpProps) => {
     text: '',
     customClass: { popup: '' }
   })
-  const navigate = useNavigate()
+
 
   const handleClick = () => {
     setSwalProps({
@@ -54,31 +54,24 @@ const Authentication = ({setIsAuthenticated}: SignUpProps) => {
       localStorage.setItem('isAuthenticated', 'true')
       localStorage.setItem('user', JSON.stringify(data.user))
       localStorage.setItem('token', data.token)
-      if (res.ok) {
-        setSwalProps({
+       if (!res.ok) {  
+        throw new Error(data.message)
+        setError(data.message)
+      }
+      setSwalProps({
           show: true,
           title: 'Success',
           text: 'Account created successfully! Redirecting...',
           customClass: { popup: 'bg-green-500 text-white' }
         })
         setTimeout(() => {
-          navigate('/')
+          window.location.href = "/"
         }, 2000)
-      } else if (data.error.code === 'P2002') {
-        handleClick()
-      } else {
-        setSwalProps({
-          show: true,
-          title: 'Error',
-          text: data.error.message,
-          customClass: { popup: 'bg-red-500 text-white' }
-        })
-      }
     } catch (error: any) {
       setSwalProps({
         show: true,
         title: 'Error',
-        text: error.code,
+        text: error.message,
         customClass: { popup: 'bg-red-500 text-white' }
       })
     }

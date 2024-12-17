@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 interface SignInProps {
   setIsAuthenticated: (isAuthenticated: boolean) => void
 }
@@ -7,7 +7,6 @@ const Login = ({setIsAuthenticated}: SignInProps) => {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
    const [errorMessage, setErrorMessage] = useState<string>('')
-  const navigate = useNavigate()
   const sendEmailToServer = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
@@ -21,24 +20,18 @@ const Login = ({setIsAuthenticated}: SignInProps) => {
        
       const data = await res.json()
       console.log(data)
-      if (res.ok) {
+        if (!res.ok) {  
+        throw new Error(data.message)
+        setError(data.message)
+      }
         localStorage.setItem('isAuthenticated', 'true')
         localStorage.setItem('user', JSON.stringify(data.user))
         localStorage.setItem('token', data.token)
-        navigate('/')
+        window.location.href = "/"
         setEmail('')
-      } else{
-        if (data.error.code === 'P2001') {
-          setErrorMessage('Account not found')
-        } else if (data.error.message === 'invalid password') {
-          setErrorMessage('Invalid password. Please try again.')
-        } else {
-          setErrorMessage('Error: ' + data.error.message)
-        }
-      }
     } catch (error: any){
-      console.error('Error:', error)
-      setErrorMessage('Error: ' + error.message)
+      console.error(error)
+      setErrorMessage(error.message)
     }
   }
 

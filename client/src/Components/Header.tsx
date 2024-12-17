@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState} from 'react'
 import { FaBars, FaTimes, FaTrophy } from 'react-icons/fa'
-
-function Header({ Menu, toggleMenu }: { Menu: boolean, toggleMenu: () => void }) {
+interface User{
+  id: string;
+  email: string;
+}
+function Header({ Menu, session, toggleMenu }: { Menu: boolean, session: User, toggleMenu: () => void }) {
   const [scrolled, setScrolled] = useState<boolean>(false)
-
   const handleLinkClick = () => {
     toggleMenu()
     document.body.style.overflow = 'auto'
@@ -38,6 +40,16 @@ function Header({ Menu, toggleMenu }: { Menu: boolean, toggleMenu: () => void })
             <span className="absolute -bottom-1 right-0 w-0 transition-all h-0.5 bg-indigo-600 group-hover:w-full"></span>
           </a>
         ))}
+          {session.length > 0 && (
+          <button 
+          className="bg-red-400 text-white p-4 rounded"
+          onClick={() => {
+         localStorage.removeItem('isAuthenticated')
+         localStorage.removeItem('user')
+         localStorage.removeItem('token')
+         window.location.href = "/"
+          }}>Logout</button>
+        )}
       </nav>
 
       <nav className="hidden md:inline-block text-white">
@@ -48,7 +60,7 @@ function Header({ Menu, toggleMenu }: { Menu: boolean, toggleMenu: () => void })
           </a>
         ))}
       </nav>
-
+   
       <a
         className="hidden md:inline-flex mt-3 cursor-pointer btn relative z-1 items-center justify-start overflow-hidden font-medium transition-all bg-transparent rounded hover:bg-white group py-2 px-3 border-2 border-purple-600 text-2xl text-white">
         <span className="w-56 h-48 rounded bg-purple-700 absolute bottom-0 left-0 translate-x-full ease-out duration-500 transition-all translate-y-full mb-9 ml-9 group-hover:ml-0 group-hover:mb-32 group-hover:translate-x-0 group-hover:border-0"></span>
