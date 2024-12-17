@@ -39,7 +39,7 @@ const Authentication = () => {
       return
     }
     try {
-      const res = await fetch('/SignUp', {
+      const res = await fetch('http:///SignUp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
