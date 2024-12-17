@@ -50,6 +50,10 @@ const Authentication = ({setIsAuthenticated}: SignUpProps) => {
       })
 
       const data = await res.json()
+      console.log(data)
+      localStorage.setItem('isAuthenticated', 'true')
+      localStorage.setItem('user', JSON.stringify(data.user))
+      localStorage.setItem('token', data.token)
       if (res.ok) {
         setSwalProps({
           show: true,

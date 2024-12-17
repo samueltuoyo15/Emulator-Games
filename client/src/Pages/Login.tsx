@@ -1,7 +1,11 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-const Login = () => {
+interface SignInProps {
+  setIsAuthenticated: (isAuthenticated: boolean) => void
+}
+const Login = ({setIsAuthenticated}: SignInProps) => {
   const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
    const [errorMessage, setErrorMessage] = useState<string>('')
   const navigate = useNavigate()
   const sendEmailToServer = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -12,14 +16,18 @@ const Login = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email })
+        body: JSON.stringify({ email, password })
       })
-
+       
+      const data = await res.json()
+      console.log(data)
       if (res.ok) {
+        localStorage.setItem('isAuthenticated', 'true')
+        localStorage.setItem('user', JSON.stringify(data.user))
+        localStorage.setItem('token', data.token)
         navigate('/')
         setEmail('')
-      } else {
-        const data = await res.json()
+      } else{
         if (data.error.code === 'P2001') {
           setErrorMessage('Account not found')
         } else if (data.error.message === 'invalid password') {
@@ -44,6 +52,14 @@ const Login = () => {
           onChange={e => setEmail(e.target.value)}
           type="email"
           placeholder="Email Address"
+          className="p-4 rounded border-2 border-purple-600 text-black block w-80 mt-4 outline-1 outline-purple-700"
+        />
+          <input
+         required 
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          type="password"
+          placeholder="password"
           className="p-4 rounded border-2 border-purple-600 text-black block w-80 mt-4 outline-1 outline-purple-700"
         />
         <input

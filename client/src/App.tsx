@@ -20,7 +20,7 @@ function App() {
         <Route path="/" element={<MainLayout />} />
         <Route path="/games" element={<ViewAllGames />} />
         <Route path="/auth" setIsAuthenticated={setIsAuthenticated} element={<Authentication />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" setIsAuthenticated={setIsAuthenticated} element={<Login />} />
         <Route path="*" element={<NotFound />} />
           </Routes>
         </Router>
