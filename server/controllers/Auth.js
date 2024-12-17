@@ -1,39 +1,69 @@
-import { createClient } from '@supabase/supabase-js'
-import dotenv from 'dotenv'
+import bcrypt from 'bcryptjs'
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+import User from "../models/User.js";
+dotenv.config();
 
-dotenv.config()
+export const registerUser = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: `${email} user already exists` });
+    }
+    const encryptedPassword = await bcrypt.hash(password, 10)
+  
+    const newUser = await User.create({ email, password: encryptedPassword });
+    const token = jwt.sign(
+      { userId: newUser._id },
+      process.env.JWT_SECRET,
+      { expiresIn: process.env.JWT_SECRET_EXPIRES_IN }
+    );
 
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY)
+    return res.status(201).json({
+      message: "User was created successfully",
+      success: true,
+      token,
+      user: {
+        id: newUser._id,
+        email: newUser.email,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
 
-const SignUpUser = async (email, password) => {
-    const { user, error } = await supabase.auth.signUp({
-        email: email,
-        password: password
-    })
+export const loginUser = async (req, res) => {
+  const { email, password} = req.body;
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: email +" User does not exist" });
+    }
     
-    if (error) {
-        console.log('SignUp error:', error)
-    } else {
-        console.log('User Signed Up Successfully:', user)
+    const isPasswordValid = await bcrypt.compare(password, user.password)
+    if (!isPasswordValid) {
+      return res.status(400).json({ message: 'Invalid email or password' })
     }
+    const token = jwt.sign(
+      { userId: user._id },
+      process.env.JWT_SECRET,
+      { expiresIn: process.env.JWT_SECRET_EXPIRES_IN }
+    );
 
-    return { user, error }
-}
-
-const SignInWithMagicLink = async (email) => {
-    const { data, error } = await supabase.auth.signInWithOtp({
-        email,
-        options: {
-      redirectTo: 'http://localhost:4000/dashboard'
-        }
-    })
-
-    if (error) {
-        console.log('Error sending magic link:', error.message)
-    } else {
-        console.log('Magic link sent successfully to:', data)
-    }
-
-    return { data, error }
-}
-export {SignUpUser, SignInWithMagicLink}
+    return res.status(200).json({
+      message: "User logged in successfully",
+      success: true,
+      token,
+      user: {
+        id: user._id,
+        email: user.email,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};

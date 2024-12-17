@@ -2,7 +2,11 @@ import { useState } from 'react'
 import SweetAlert2 from 'react-sweetalert2'
 import { Link, useNavigate } from 'react-router-dom'
 
-const Authentication = () => {
+interface SignUpProps {
+  setIsAuthenticated: (isAuthenticated: boolean) => void
+}
+
+const Authentication = ({setIsAuthenticated}: SignUpProps) => {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [showPassword, setShowPassword] = useState<boolean>(false)
