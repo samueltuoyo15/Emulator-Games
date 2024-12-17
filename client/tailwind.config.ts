@@ -1,16 +1,9 @@
-import type { Config } from 'tailwindcss';
+import { Config } from 'tailwindcss';
 
 const config: Config = {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./src/**/*.{html,js,ts,tsx}'],
   theme: {
-    extend: {
-      fontFamily: {
-        sans: ['Poppins', 'sans-serif'],
-      },
-    },
+    extend: {},
   },
   plugins: [],
 };

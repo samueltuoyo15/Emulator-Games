@@ -1,28 +1,18 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tailwindcss from 'tailwindcss'
-import autoprefixer from 'autoprefixer'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import tailwindcss from './tailwind.config.ts'; // Import your Tailwind config
+import autoprefixer from 'autoprefixer';
+import postcssConfig from './postcss.config.ts'; // Import your PostCSS config
 
 export default defineConfig({
-  plugins: [
-    react(), 
-  ],
-  
-  : {
+  plugins: [react()],
+  css: {
     postcss: {
       plugins: [
-        tailwindcss(), 
-        autoprefixer(), 
+        tailwindcss, // Use the imported Tailwind config
+        autoprefixer,
+        ...postcssConfig.plugins, // Spread in the plugins from PostCSS config
       ],
     },
   },
-    server: {
-    proxy: {
-      '/api': {
-        target: 'http://localhost:10000',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
-      }
-    }
-  }
-})
+});
