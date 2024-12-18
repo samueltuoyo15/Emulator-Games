@@ -18,14 +18,10 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => localStorage.getItem('isAuthenticated') === 'true');
   const [session, setSession] = useState<User[] | null>(null)
   useEffect(() => {
-    const Status = localStorage.getItem('isAuthenticated');
-    setIsAuthenticated(Status === 'true');
-  },[]);
-  useEffect(() => {
-    const isAuthenticated = localStorage.getItem("user");
-    if (isAuthenticated) {
+    const user = localStorage.getItem("user");
+    if (user) {
       try {
-        const parsedUser = JSON.parse(isAuthenticated);
+        const parsedUser = JSON.parse(user);
         setSession(Array.isArray(parsedUser) ? parsedUser : [parsedUser]);
       } catch (error) {
         setSession(null);
