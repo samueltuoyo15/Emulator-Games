@@ -32,7 +32,6 @@ const games = [
     {id: 8, album: "https://images.emulatorgames.net/xbox/gta-san-andreas.webp", uri: "https://static.emulatorgames.net/static2/roms/xbox/GTA%20San%20Andreas%20[!].7z"},
     {id: 10, album: "https://images.emulatorgames.net/playstation-2/tmnt.webp", uri: "https://serve.emulatorgames.net/serve2/roms/playstation-2/TMNT%20(USA).7z"},
     {id: 11, album: "https://images.emulatorgames.net/playstation-portable/wwe-smackdown-vs-raw-2010-featuring-ecw.webp", uri: "https://serve.emulatorgames.net/serve3/roms/playstation-portable/WWE%20SmackDown!%20vs.%20RAW%202010%20featuring%20ECW%20(USA).zip"},
-    {id: 12, album: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5QoTwGdj5wDm3v7pUVljPa4s6e7h6mX0UsA&usqp=CAU", uri: "https://www.mediafire.com/file/414abrrom8isdx5/eFootball+TM+ARTS+2024+%E2%84%A2+v2.7z?dkey=5d32xxkqlqi&r=220"}
 ]
 
 
