@@ -14,7 +14,7 @@ function Game(){
   useEffect(() => {
     const fetchGames = async () => {
       try {
-        const response = await fetch(`http://localhost:10000/games/${id}`);
+        const response = await fetch(`import.meta.env.VITE_GAMES/${id}`);
         const data = await response.json()
         setGame(data);
       } catch (error) {

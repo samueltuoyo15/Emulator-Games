@@ -8,7 +8,7 @@ const ViewAllGames = () => {
   useEffect(() => {
     const fetchGames = async () => {
       try {
-        const response = await fetch('http://localhost:10000/games');
+        const response = await fetch(`import.meta.env.VITE_GAMES/${games}');
         const data= await response.json()
         setGames(data);
       } catch (error) {
