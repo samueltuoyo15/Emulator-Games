@@ -14,9 +14,10 @@ const corsOptions = {
     allowedHeaders: ['Content-Type', 'Authorization'], 
 };
 
-app.use(cors(corsOptions))
 app.use(express.json())
 connectDb()
+app.use(cors(corsOptions))
+
 
 app.post("/signUp", registerUser)
 app.post("/signIn", loginUser)
@@ -35,8 +36,14 @@ const games = [
 ]
 
 
-app.get('/games', (req, res) => {
-    res.status(200).json(games)
+app.get('/games', async (req, res) => {
+    try{
+      if(!games) return 
+      res.status(200).json(games)
+    }catch(error){
+      res.status(500)
+      console.error(error)
+    }
 })
 
 
