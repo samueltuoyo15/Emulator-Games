@@ -4,7 +4,7 @@ interface User{
   id: string;
   email: string;
 }
-function Header({ Menu, session, toggleMenu }: { Menu: boolean, session: User, toggleMenu: () => void }) {
+function Header({ Menu, session, toggleMenu }: { Menu: boolean, session: User[] | null, toggleMenu: () => void }) {
   const [scrolled, setScrolled] = useState<boolean>(false)
   const handleLinkClick = () => {
     toggleMenu()
@@ -40,7 +40,7 @@ function Header({ Menu, session, toggleMenu }: { Menu: boolean, session: User, t
             <span className="absolute -bottom-1 right-0 w-0 transition-all h-0.5 bg-indigo-600 group-hover:w-full"></span>
           </a>
         ))}
-          {session.length > 0 && (
+          {session && session.length > 0 && (
           <button 
           className="bg-red-400 text-white p-4 rounded"
           onClick={() => {

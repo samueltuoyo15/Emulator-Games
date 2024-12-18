@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes, Navigate} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import {useState, useEffect} from 'react'
 import '@fontsource/poppins/400.css'
 import '@fontsource/poppins/600.css'
@@ -8,24 +8,30 @@ import Login from './Pages/Login'
 import Game from './Pages/Game'
 import Authentication from './Pages/Authentication'
 import MainLayout from './Layout/MainLayout'
+
+interface User{
+  email: string;
+  id: string;
+}
+
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => localStorage.getItem('isAuthenticated') === 'true');
-  const [session, setSession] = useState<any[]>([])
+  const [session, setSession] = useState<User[] | null>(null)
   useEffect(() => {
     const Status = localStorage.getItem('isAuthenticated');
     setIsAuthenticated(Status === 'true');
   },[]);
   useEffect(() => {
-    const user = localStorage.getItem("user");
-    if (user) {
+    const isAuthenticated = localStorage.getItem("user");
+    if (isAuthenticated) {
       try {
-        const parsedUser = JSON.parse(user);
+        const parsedUser = JSON.parse(isAuthenticated);
         setSession(Array.isArray(parsedUser) ? parsedUser : [parsedUser]);
       } catch (error) {
-        setSession([]);
+        setSession(null);
       }
     } else {
-      setSession([]);
+      setSession(null);
     }
   }, []);
     return (

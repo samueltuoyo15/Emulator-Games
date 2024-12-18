@@ -3,8 +3,9 @@ import SweetAlert2 from 'react-sweetalert2'
 import { Link } from 'react-router-dom'
 
 interface SignUpProps {
-  setIsAuthenticated: (isAuthenticated: boolean) => void
+  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
 
 const Authentication = ({setIsAuthenticated}: SignUpProps) => {
   const [email, setEmail] = useState<string>('')
@@ -16,16 +17,6 @@ const Authentication = ({setIsAuthenticated}: SignUpProps) => {
     text: '',
     customClass: { popup: '' }
   })
-
-
-  const handleClick = () => {
-    setSwalProps({
-      show: true,
-      title: 'Hey Champ 👋',
-      text: 'Seems like this user already exists!',
-      customClass: { popup: 'bg-purple-700 text-white' }
-    })
-  }
 
   const handleClose = () => {
     setSwalProps(prev => ({ ...prev, show: false }))
@@ -50,13 +41,18 @@ const Authentication = ({setIsAuthenticated}: SignUpProps) => {
       })
 
       const data = await res.json()
-      console.log(data)
+      setIsAuthenticated(true)
       localStorage.setItem('isAuthenticated', 'true')
       localStorage.setItem('user', JSON.stringify(data.user))
       localStorage.setItem('token', data.token)
        if (!res.ok) {  
         throw new Error(data.message)
-        setError(data.message)
+          setSwalProps({
+          show: true,
+          title: 'error',
+          text: data.message,
+          customClass: { popup: 'bg-green-500 text-white' }
+        })
       }
       setSwalProps({
           show: true,

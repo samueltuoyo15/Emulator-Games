@@ -1,9 +1,15 @@
 import { useParams, Link } from 'react-router-dom'
 import { useState, useEffect } from 'react';
 import {FaArrowLeft} from 'react-icons/fa'
+
+interface GameProps{
+  uri: string;
+  album: string;
+  id: string;
+}
 function Game(){
   const { id } = useParams()
-   const [game, setGame] = useState<any []>([]);
+   const [game, setGame] = useState<GameProps | null>(null);
  
   useEffect(() => {
     const fetchGames = async () => {
@@ -25,12 +31,12 @@ function Game(){
       </Link>
         <article
           onContextMenu={(e) => e.preventDefault()}
-          key={game.id}
+          key={game?.id}
           className="text-center mt-7 w-full md:w-52 rounded-2xl p-2"
         >
-          <img src={game.album} className="w-full md:w-40 text-center mx-auto" alt="Game album" />
+          <img src={game?.album} className="w-full md:w-40 text-center mx-auto" alt="Game album" />
           <a
-            href={game.uri}
+            href={game?.uri}
             download={true}
             className="inline-flex bg-indigo-800 text-center mt-3 cursor-pointer btn relative z-1 items-center justify-start overflow-hidden font-medium transition-all rounded hover:bg-white group py-2 px-3 border-2 border-purple-600 text-2xl text-white"
           >

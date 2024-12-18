@@ -5,8 +5,7 @@ interface User {
   email: string;
 }
 
-function Showcase({ Menu, session}: { Menu: boolean, session: User}) {
-  console.log(session)
+function Showcase({ Menu, session}: { Menu: boolean, session: User[] | null}) {
   return (
     <section
       onContextMenu={(e) => e.preventDefault()}
@@ -16,7 +15,7 @@ function Showcase({ Menu, session}: { Menu: boolean, session: User}) {
       <div>
         <img src="/gamer.png" alt="gamer" className="w-full md:w-64" />
       </div>
-        {session.length > 0 ? (
+        {session && session.length > 0 ? (
          <div className="w-full md:w-80">
          <h2 className="font-bold text-purple-500 text-3xl">Welcome, {session[0]?.email.split('@')[0]}</h2>
         <h3 className="font-bold text-white uppercase text-3xl">game's heaven</h3>

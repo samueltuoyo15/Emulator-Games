@@ -14,7 +14,11 @@ interface User {
   email: string;
 }
 
-const MainLayout = ({session}: User) => {
+interface MainLayoutProps {
+  session: User[] | null;
+}
+
+const MainLayout = ({session}: MainLayoutProps) => {
   const [Menu, setMenu] = useState<boolean>(false)
   const [games, setGames] = useState<any []>([])
   const toggleMenu = () => setMenu(!Menu)
@@ -41,7 +45,7 @@ const MainLayout = ({session}: User) => {
       <Features />
       <About Menu={Menu} />
       <Games Menu={Menu} SlicedGames={SlicedGames} />
-      <Pricing Menu={Menu} session={session}/>
+      <Pricing Menu={Menu}/>
       <Faq />
       <Contact />
       <Footer />

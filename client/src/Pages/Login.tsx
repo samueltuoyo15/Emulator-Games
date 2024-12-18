@@ -1,8 +1,12 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+
 interface SignInProps {
-  setIsAuthenticated: (isAuthenticated: boolean) => void
+  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+
+
 const Login = ({setIsAuthenticated}: SignInProps) => {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -19,11 +23,11 @@ const Login = ({setIsAuthenticated}: SignInProps) => {
       })
        
       const data = await res.json()
-      console.log(data)
         if (!res.ok) {  
         throw new Error(data.message)
-        setError(data.message)
+        setErrorMessage(data.message)
       }
+        setIsAuthenticated(true)
         localStorage.setItem('isAuthenticated', 'true')
         localStorage.setItem('user', JSON.stringify(data.user))
         localStorage.setItem('token', data.token)
