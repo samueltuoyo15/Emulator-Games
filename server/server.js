@@ -9,7 +9,7 @@ const app = express()
 const port = process.env.PORT
 
 const corsOptions = {
-    origin: 'https://emulator-games.vercel.app',
+    origin: ['https://emulator-games.vercel.app', 'http://localhost:5173'],
     methods: ['GET', 'POST'], 
     allowedHeaders: ['Content-Type', 'Authorization'], 
 };

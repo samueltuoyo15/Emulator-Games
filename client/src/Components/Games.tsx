@@ -6,9 +6,9 @@ import '/Going offline-bro.png'
 function Games({ Menu, SlicedGames }: { Menu: any, SlicedGames: any }) {
   
   return (
-    <section className="select-none bg-indigo-700 p-5">
+    <section id="games" className="select-none bg-indigo-700 p-5">
       <h2 className="text-2xl text-center font-bold text-purple-400">TRENDING <span className="text-white">GAMES</span></h2>
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-10 items-center">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-10 items-center">
         {SlicedGames.map((game: any) => (
           <article key={game.id} onContextMenu={(e) => e.preventDefault()} className="text-center mt-7 w-full md:w-52 rounded-2xl p-2 bg-indigo-800 shadow-2xl">
             <img src={game.album} className="w-full md:w-40 text-center mx-auto" alt="Game album" />

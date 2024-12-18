@@ -19,12 +19,14 @@ const ViewAllGames = () => {
   }, []);
 
   return (
-    <div onContextMenu={(e) => e.preventDefault()} className="p-5 bg-indigo-700 grid grid-cols-1 md:grid-cols-4">
-      <Link to="/" className="text-white flex items-center justify-start">
+    <section className="p-5 bg-indigo-400 min-h-screen">
+     <Link to="/" className="text-white flex items-center justify-start">
         <FaArrowLeft className="text-2xl mr-2 inline" />
         Back
       </Link>
-      {games.map((game, index) => (
+   
+    <div onContextMenu={(e) => e.preventDefault()} className="grid grid-cols-2 md:grid-cols-4">
+     {games.map((game, index) => (
         <article
           onContextMenu={(e) => e.preventDefault()}
           key={index}
@@ -43,6 +45,7 @@ const ViewAllGames = () => {
         </article>
       ))}
     </div>
+    </section>
   );
 };
 

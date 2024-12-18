@@ -26,7 +26,7 @@ const MainLayout = ({session}: MainLayoutProps) => {
     useEffect(() => {
     const fetchGames = async () => {
       try {
-        const response = await fetch('http://localhost:10000/games');
+        const response = await fetch(import.meta.env.VITE_GAMES);
         const data= await response.json()
         setGames(data);
       } catch (error) {
@@ -36,7 +36,7 @@ const MainLayout = ({session}: MainLayoutProps) => {
     fetchGames();
   }, []);
 
-  const SlicedGames = games.slice(0, 3)
+  const SlicedGames = games.slice(0, 4)
 
   return (
     <>
