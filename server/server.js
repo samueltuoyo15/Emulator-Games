@@ -8,7 +8,13 @@ dotenv.config()
 const app = express()
 const port = process.env.PORT
 
-app.use(cors())
+const corsOptions = {
+    origin: 'https://emulator-games.vercel.app',
+    methods: ['GET', 'POST'], 
+    allowedHeaders: ['Content-Type', 'Authorization'], 
+};
+
+app.use(cors(corsOptions))
 app.use(express.json())
 connectDb()
 
